@@ -3,7 +3,7 @@ const Note = require("../models/Note");
 module.exports = {
   index: async (_, res) => {
     try {
-      const notes = await Note.find();
+      const notes = await Note.find().sort({ createdAt: "desc" });
       res.json(notes);
     } catch (error) {
       console.log("index error", error.message);
@@ -27,7 +27,6 @@ module.exports = {
   },
 
   store: async (req, res) => {
-    console.log(req.body);
     try {
       const { title, content, important } = req.body;
       const newNote = await Note.create({
